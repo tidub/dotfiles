@@ -1,12 +1,15 @@
+" Use space as leader
 let mapleader =" "
 
-" Automatic installation of vim-plug:
+" Automatic installation of vim-plug
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+
+" Plugins (managed with Vim-Plug)
 call plug#begin('~/.vim/plugged')
 Plug 'lervag/vimtex'      "in terminal: latexmk -pdf -pvc file.tex
 Plug 'junegunn/goyo.vim'
@@ -18,7 +21,7 @@ Plug 'numirias/semshi'	  "pycharm style syntax highlighting
 "Plug 'christoomey/vim-tmux-navigator' "navigate vim tmux splits 'ctrl+h/j/k/l'
 call plug#end()
 
-" Some basics:
+" Basic settings
  	set nocompatible
 	filetype plugin on
 	syntax on
@@ -28,23 +31,22 @@ call plug#end()
 	set relativenumber
 	set selection=inclusive
         set background=light
-	set guicursor=
+	set guicursor= 		"work-around for nvim/terminal cursor conflict
 	let g:tex_flavor = 'latex'
 
-" Enable auto-completion:
+" Enable auto-completion
 	set wildmode=longest,list,full
 
-" Disables automatic commenting on new line:
+" Disables automatic commenting on new line
 	autocmd Filetype * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
-" Goyo plugin makes text more readable when writing prose:
+" Toggle Goyo plugin for more readable text
 	map <leader>f :Goyo<CR>
 
+" Toggle spell-check
+	map <silent><leader>s :setlocal spell! spelllang=en<CR>
 
-" Spell-check set to <leader>o, 'o' for 'orthography':
-"	map <leader>o :setlocal spell! spelllang=eng_us<CR>
-
-" Splits open at the bottom and right:
+" Splits open at the bottom and right
 	set splitbelow splitright
 
 " Auto resize Vim splits to active split
@@ -62,9 +64,6 @@ call plug#end()
 " Below is to fix issues with the above mappings in quickfix window
 	autocmd CmdwinEnter * nnoremap <CR> <CR>
 	autocmd BufReadPost quickfix nnoremap <CR> <CR>
-
-" Clear search highlights with <escape>
-	" nnoremap <esc> :noh<return><esc>
 
 " Toggle relative line numbering with <leader>l
 	fu! ToggleRelative ()
@@ -100,6 +99,16 @@ call plug#end()
 	xnoremap <leader>{ xi{}<Esc>P
 	xnoremap <leader>< xi<><Esc>P
 
+" Command to enter visual block mode from normal mode
+" Used for comment/uncomment bindings below
+	command! Vb normal! <C-v>
+
+" Comment/uncomment from below cursor to next blank line
+	map <leader>3 j :Vb<CR> JkI#<space><Esc>k
+	map <leader>c j :Vb<CR> JkI"<space><Esc>k
+	map <leader>x j :Vb<CR> JkxkH
+
+
 " Strong hjkl movement
 	map $ <Nop>
 	map ^ <Nop>
@@ -116,7 +125,7 @@ call plug#end()
 	nnoremap <C-h> <C-w>h
 	nnoremap <C-l> <C-w>l
 
-" Automatically deletes all trailing whitespace on save:
+" Automatically deletes all trailing whitespace on save
 	autocmd BufwritePre * %s/\s\+$//e
 
 " Navigate properly when lines are wrapped
@@ -139,9 +148,8 @@ call plug#end()
 	hi CursorLineNr term=bold ctermfg=221 ctermbg=none
 	hi MatchParen ctermfg=232 ctermbg=221
 
-" source .vimrc with <leader>r
+" Source vimrc file
 	map <leader>r :source ~/.vimrc<CR>
 
-" reload: 		:source ~/.vimrc
 " install plugins: 	:PlugInstall
 " update plugins: 	:PlugUpdate
