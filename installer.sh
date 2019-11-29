@@ -1,14 +1,20 @@
 #!/bin/sh
 
-# Script for installing homebrew plus useful packages
-# Use `chmod +x` on file to make it executable
-# Comment out unwanted packages!
+# This script installs:
+# Command Line Tools for Homebrew
+# Homebrew
+# CLI packages listed in $brews
+# GUI packages listed in $cask_brews
+# Tex-Live Package Manager `tlpmr` (included in basictex)
+# Latex packages listed in $latex_packages
 
-echo "Installing Command Line Tools for Xcode (required for Homebrew)..."
+echo "Installing Command Line Tools..."
 xcode-select --install
+echo "...done!"
 
 echo "Installing Homebrew..."
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+echo "...done!"
 
 brews="
 	python
