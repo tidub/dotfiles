@@ -1,46 +1,93 @@
 #!/bin/bash
 
+# Keep your dotfiles and config files up-to-date across machines.
+
 # This script:
-# Backs up old dotfiles in ~/dotfiles_old
-# Symlinks last pulled ~/dotfiles to ~ or ~/.config/...
+# Creates directories dir and old_dir
+# Local dotfiles and config files are backed up in old_dir
+# Remote dotfiles and config files are cloned into dir
+# Local dotfiles and config files are replaced with
+# symlinks to their up-to-date namesakes in dir
 
-# Files in ~ assigned to variable $files
-# Files not in ~ handled as separate cases
-
-# Variables:
+# Directories created
 dir=~/dotfiles
 old_dir=~/dotfiles_old
-files="bash_profile vimrc zshrc"
 
-# Make dotfiles_old
-echo "Making $old_dir to backup existing dotfiles..."
-mkdir -p $old_dir
-echo "...done"
+# Git remote url
+git_url="https://github.com/tidub/dotfiles.git"
 
-# Change to dotfiles directory
-echo "Changing to $dir directory..."
-cd $dir
-echo "...done"
+# Dotfiles ~/."..."
+files="
+	bash_profile
+	vimrc
+	zshrc
+"
 
-# Move dotfiles in ~ to dotfiles_old, then create symlinks
-for file in $files; do
-    echo "Moving existing dotfiles from ~ to $old_dir"
-    mv ~/.$file $old_dir
-    echo "Creating symlink to $file in ~"
-    ln -s $dir/$file ~.$file
-done
+# Config files ~/.config/"..."
+config_files=(
+	"karabiner/karabiner.json"
+	"nvim/init.vim"
+)
 
-# Move config files in ~/.config to dotfiles_old, then create symlinks
+# Tell user what the script does
+echo "This script will update local files with their remote namesakes at..."
+echo
+echo "$git_url"
+echo
 
-# ~/.config/karabiner/karabiner.json
-echo "Moving config file karabiner.json to $old_dir"
-mv ~/.config/karabiner/karabiner.json $old_dir/karabiner.json
-echo "Creating symlink to karabiner.json in ~/.config/karabiner"
-ln -s $dir/karabiner.json ~./config/karabiner/karabiner.json
+# User prompt
+read -p "...do you want to continue? (y/n) " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
 
-# ~/.config/nvim.init.vim
-echo "Moving config file init.vim to $old_dir"
-mv ~/.config/nvim/init.vim $old_dir/init.vim
-echo "Creating symlink to init.vim in ~/.config/nvim"
-ln -s $dir/init.vim ~/.config/nvim/init.vim
+	# Setup directory to clone into
+	echo
+	echo "Check $dir exists and make it the current directory..."
+	mkdir $dir
+	cd $dir
+	echo "...done!"
+	echo
 
+	# Setup git remote
+	echo "Cloning from $git_url into $dir..."
+	git init
+	git remote add origin "$git_url"
+	git pull origin master
+	echo "...done!"
+	echo
+
+	# Setup backup and config directories
+	echo "Emptying $old_dir..."
+	rm -rf $old_dir
+	mkdir -p $old_dir
+	echo "Checking ~/.config exists..."
+	mkdir ~/.config
+	echo "...done!"
+	echo
+
+	# Backup dotfiles and create symlinks
+	for file in $files; do
+		echo "Sending $file copy to $old_dir..."
+		mv ~/.$file $old_dir
+		echo "Creating symlink..."
+		ln -s $dir/$file ~/.$file
+		echo "...$file updated successfully!"
+		echo
+	done
+
+	# Backup config files and create symlinks
+	for i in "${config_files[@]}"; do
+		config_dir="${i%%/*}"
+		config_file="${i##*/}"
+		echo "Sending $config_file copy to $old_dir..."
+		mv ~/.config/$config_dir/$config_file $old_dir/$config_file
+		echo "Checking directory for symlink exists..."
+		mkdir ~/.config/$config_dir
+		echo "Creating symlink..."
+		ln -s $dir/$config_file ~/.config/$config_dir/$config_file
+		echo "...$config_file updated successfully!"
+		echo
+	done
+
+fi
