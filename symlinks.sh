@@ -3,15 +3,15 @@
 # Keep your dotfiles and config files up-to-date across machines.
 
 # This script:
-# Creates directories dir and old_dir
-# Local dotfiles and config files are backed up in old_dir
-# Remote dotfiles and config files are cloned into dir
+# Creates directories clone_dir and backup_dir
+# Local dotfiles and config files are backed up in backup_dir
+# Remote dotfiles and config files are cloned into clone_dir
 # Local dotfiles and config files are replaced with
-# symlinks to their up-to-date namesakes in dir
+# symlinks to their up-to-date namesakes in clone_dir
 
 # Directories created
-dir=~/dotfiles
-old_dir=~/dotfiles_old
+clone_dir=~/dotfiles
+backup_dir=~/dotfiles_old
 
 # Git remote url
 git_url="https://github.com/tidub/dotfiles.git"
@@ -43,14 +43,14 @@ then
 
 	# Setup directory to clone into
 	echo
-	echo "Check $dir exists and make it the current directory..."
-	mkdir $dir
-	cd $dir
+	echo "Check $clone_dir exists and make it the current directory..."
+	mkdir $clone_dir
+	cd $clone_dir
 	echo "...done!"
 	echo
 
 	# Setup git remote
-	echo "Cloning from $git_url into $dir..."
+	echo "Cloning from $git_url into $clone_dir..."
 	git init
 	git remote add origin "$git_url"
 	git pull origin master
@@ -58,9 +58,9 @@ then
 	echo
 
 	# Setup backup and config directories
-	echo "Emptying $old_dir..."
-	rm -rf $old_dir
-	mkdir -p $old_dir
+	echo "Emptying $backup_dir..."
+	rm -rf $backup_dir
+	mkdir -p $backup_dir
 	echo "Checking ~/.config exists..."
 	mkdir ~/.config
 	echo "...done!"
@@ -68,10 +68,10 @@ then
 
 	# Backup dotfiles and create symlinks
 	for file in $files; do
-		echo "Sending $file copy to $old_dir..."
-		mv ~/.$file $old_dir
+		echo "Sending $file copy to $backup_dir..."
+		mv ~/.$file $backup_dir
 		echo "Creating symlink..."
-		ln -s $dir/$file ~/.$file
+		ln -s $clone_dir/$file ~/.$file
 		echo "...$file updated successfully!"
 		echo
 	done
@@ -80,12 +80,12 @@ then
 	for i in "${config_files[@]}"; do
 		config_dir="${i%%/*}"
 		config_file="${i##*/}"
-		echo "Sending $config_file copy to $old_dir..."
-		mv ~/.config/$config_dir/$config_file $old_dir/$config_file
+		echo "Sending $config_file copy to $backup_dir..."
+		mv ~/.config/$config_dir/$config_file $backup_dir/$config_file
 		echo "Checking directory for symlink exists..."
 		mkdir ~/.config/$config_dir
 		echo "Creating symlink..."
-		ln -s $dir/$config_file ~/.config/$config_dir/$config_file
+		ln -s $clone_dir/$config_file ~/.config/$config_dir/$config_file
 		echo "...$config_file updated successfully!"
 		echo
 	done
