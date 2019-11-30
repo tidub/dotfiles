@@ -4,26 +4,16 @@ source /usr/local/share/antigen/antigen.zsh
 antigen use oh-my-zsh
 
 # Bundles from the default repo (robbyrussell's oh-my-zsh).
-antigen bundle git
-antigen bundle heroku
 antigen bundle pip
-antigen bundle lein
 antigen bundle command-not-found
-# antigen bundle autojump
 antigen bundle fasd
-antigen bundle brew
 antigen bundle common-aliases
 antigen bundle compleat
-antigen bundle git-extras
-antigen bundle git-flow
-antigen bundle npm
 antigen bundle osx
 antigen bundle web-search
 antigen bundle vi-mode
-antigen bundle z
-antigen bundle zsh-users/zsh-syntax-highlighting
-antigen bundle zsh-users/zsh-history-substring-search ./zsh-history-substring-search.zsh
 antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle zsh-users/zsh-syntax-highlighting
 
 # Load the theme.
 antigen theme gnzh
@@ -31,22 +21,7 @@ antigen theme gnzh
 # Tell antigen that you're done.
 antigen apply
 
-
-# Alias for CLI VLC
+# Aliases
 alias vlc="/Applications/VLC.app/Contents/MacOS/VLC -I rc"
 alias ddg="web_search duckduckgo"
 
-
-# Setup zsh-autosuggestions
-# source /Users/tim/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-
-
-
-# Enable autosuggestions automatically
-
-# zle-line-init() {
-    # zle autosuggest-start
-# }
-#
-# zle -N zle-line-init
-#
