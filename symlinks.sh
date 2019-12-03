@@ -21,6 +21,7 @@ files="
 	bash_profile
 	vimrc
 	zshrc
+	tmux.conf
 "
 
 # Config files ~/.config/"..."
