@@ -1,7 +1,6 @@
-" Use space as leader
 let mapleader =" "
 
-" Automatic installation of vim-plug
+" automatic installation of vim-plug
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -9,15 +8,14 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 
-" Plugins (managed with Vim-Plug)
+" plugins managed with vim-plug
 call plug#begin('~/.vim/plugged')
-Plug 'lervag/vimtex'      "in terminal: latexmk -pdf -pvc file.tex
+Plug 'lervag/vimtex'      "in terminal: alias latex-pdf=
 Plug 'junegunn/goyo.vim'
 Plug 'vimwiki/vimwiki'
-" NERD tree will be loaded on the first invocation of NERDTreeToggle command
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 "Plug 'sheerun/vim-polyglot'
-Plug 'numirias/semshi'	  "pycharm style syntax highlighting
+Plug 'numirias/semshi'
 "Plug 'christoomey/vim-tmux-navigator' "navigate vim tmux splits 'ctrl+h/j/k/l'
 call plug#end()
 
