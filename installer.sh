@@ -22,6 +22,7 @@ brews="
 	tmux
 	zsh
 	antigen
+	bash
 	git
 	cmus
 "
@@ -50,7 +51,6 @@ for brew_cask in $brew_casks; do
 	brew cask install $brew_cask
 	echo "...done!"
 done
-
 
 for latex_package in $latex_packages; do
 	echo "Installing $latex_package..."
