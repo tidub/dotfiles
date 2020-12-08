@@ -25,6 +25,33 @@ antigen apply
 
 # aliases
 alias ddg='web_search duckduckgo'
+alias so='web_search stackoverflow'
+alias w3='web_search duckduckgo site:w3schools.com'
 alias latex-make='latexmk -pdf -pvc file.tex'
 alias vlc='/Applications/VLC.app/Contents/MacOS/VLC -I rc'
+alias fvim='nvim $(fzf)'
 
+#commands
+
+# z jump to directory, open it in finder, cd to previous directory
+
+z. () {
+    z -p "$*"
+    open .
+    cd -
+}
+
+# mkdir, cd into it
+
+mkcd () {
+	mkdir -p "$*"
+	cd "$*"
+}
+export PATH="/usr/local/sbin:$PATH"
+
+if type rg &> /dev/null; then
+  export FZF_DEFAULT_COMMAND='rg --files'
+  export FZF_DEFAULT_OPTS='-m --height 50% --border'
+fi
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
