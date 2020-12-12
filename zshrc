@@ -31,6 +31,9 @@ alias latex-make='latexmk -pdf -pvc file.tex'
 alias vlc='/Applications/VLC.app/Contents/MacOS/VLC -I rc'
 alias fvim='nvim $(fzf)'
 
+# make fzf option-c work:
+bindkey "ç" fzf-cd-widget
+
 #commands
 
 # z jump to directory, open it in finder, cd to previous directory
