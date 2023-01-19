@@ -15,20 +15,20 @@ Plug 'sheerun/vim-polyglot'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
-"Plug 'numirias/semshi'
+" Plug 'numirias/semshi'
 call plug#end()
 
 " basic settings
-
+set clipboard=unnamed
 set nocompatible
 filetype plugin on
-syntax on
 set encoding=utf-8
 set number
-set nohls
-set relativenumber
+set hls
+" set relativenumber
 set selection=inclusive
-set background=light
+" set ignorecase
+" set smartcase
 let g:tex_flavor = 'latex'
 
 filetype plugin indent on
@@ -42,7 +42,7 @@ let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git -l -g ""'
 let $FZF_DEFAULT_OPTS = '--height 40%'
 
 " fix for nvim/terminal cursor conflict
-set guicursor=
+" set guicursor=
 
 " use backspace as normal
 set backspace=indent,eol,start
@@ -152,7 +152,16 @@ fu! ToggleCurline ()
     endif
 endfunction
 
-map <silent><leader><space> :call ToggleCurline()<CR>
+" toggle hls
+fu! ToggleHLS()
+    if &hls
+        set nohls
+    else
+        set hls
+    endif
+endfunction
+
+map <silent><leader><space> :call ToggleHLS()<CR>
 
 " use leader g to toggle goyo
 map <leader>g :Goyo<CR>
@@ -165,6 +174,9 @@ map <silent><leader>s :setlocal spell! spelllang=en<CR>
 " use leader R to source vimrc
 map <leader>R :source ~/.vimrc<CR>
 
+set background=dark
+syntax on
+colorscheme onedark
 " customise status line
 
 " function! GitBranch()
@@ -196,15 +208,15 @@ map <leader>R :source ~/.vimrc<CR>
 
 " improve colours
 
-hi clear CursorLine
-hi clear CursorColumn
-hi clear CursorLineNr
-hi Comment term=bold ctermfg=240
-hi Visual term=reverse ctermfg=none ctermbg=234
-hi LineNr term=none ctermfg=240
-hi CursorLine term=none ctermfg=none ctermbg=236
-hi CursorColumn term=none ctermfg=none ctermbg=236
-hi CursorLineNr term=bold ctermfg=221 ctermbg=none
-hi MatchParen ctermfg=232 ctermbg=221
-hi Folded ctermfg=221 ctermbg=none
-hi Search ctermfg=54
+" hi clear CursorLine
+" hi clear CursorColumn
+" hi clear CursorLineNr
+" hi Comment term=bold ctermfg=240
+" hi Visual term=reverse ctermfg=none ctermbg=234
+" hi LineNr term=none ctermfg=240
+" hi CursorLine term=none ctermfg=none ctermbg=236
+" hi CursorColumn term=none ctermfg=none ctermbg=236
+" hi CursorLineNr term=bold ctermfg=221 ctermbg=none
+" hi MatchParen ctermfg=232 ctermbg=221
+" hi Folded ctermfg=221 ctermbg=none
+" hi Search ctermfg=54

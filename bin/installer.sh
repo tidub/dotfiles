@@ -17,23 +17,38 @@ echo "Installing Homebrew..."
 echo "...done!"
 
 brews="
-	python
-	neovim
-	tmux
-	zsh
 	antigen
 	bash
-	git
 	cmus
+    curl
+    fd
+    fzf
+	git
+    gray
+    imagemagick
+    lua
+	neovim
+	python
+    rename
+    ripgrep
+    rust
+    swift
+	tmux
+    tree
+    z
+	zsh
 "
 
 brew_casks="
-	karabiner-elements
-	dropbox
-	spectacle
-	slack
-	google-chrome
 	basictex
+    caffeine
+	dropbox
+    firefox
+	karabiner-elements
+    monitorcontrol
+	slack
+	spectacle
+    visual-studio-code
 "
 
 latex_packages="

@@ -3,3 +3,4 @@ let &packpath = &runtimepath
 source ~/.vimrc
 let g:vimtex_compiler_progname = 'nvr'
 let g:python3_host_prog = '/usr/local/bin/python3'
+let g:loaded_perl_provider = 0

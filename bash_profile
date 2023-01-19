@@ -1,4 +1,3 @@
-# shell prompt
 export PS1='[\s-\v] \w\n$ '
 export PS2="> "
 
@@ -10,3 +9,4 @@ alias ~='cd ~'
 alias ..='cd ../'
 alias ...='cd ../../'
 alias reload='source ~/.bash_profile'
+. "$HOME/.cargo/env"
