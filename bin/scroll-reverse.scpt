@@ -1,3 +1,4 @@
+#!/usr/bin/osascript
 tell application "System Preferences"
 	reveal anchor "mouseTab" of pane "com.apple.preference.mouse"
 end tell

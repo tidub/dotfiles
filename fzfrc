@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+
+local test_theme="\
+    --color=bg+:#D9D9D9 \
+    --color=bg:#E1E1E1 \
+    --color=border:#C8C8C8 \
+    --color=spinner:#719899 \
+    --color=hl:#719872 \
+    --color=fg:#616161 \
+    --color=header:#719872 \
+    --color=info:#727100 \
+    --color=pointer:#E12672 \
+    --color=marker:#E17899 \
+    --color=fg+:#616161 \
+    --color=preview-bg:#D9D9D9 \
+    --color=prompt:#0099BD \
+    --color=hl+:#719899 \
+    "
+
+local tap_theme="\
+    --color=bg+:#131415 \
+    --color=bg:#131415 \
+    --color=border:#b294bb \
+    --color=spinner:#cc6666 \
+    --color=hl:#c5c8c6 \
+    --color=fg:#81a2be \
+    --color=header:#b5bd68 \
+    --color=info:#b294bb \
+    --color=pointer:#f0c674 \
+    --color=marker:#8abeb7 \
+    --color=fg+:#c5c8c6 \
+    --color=preview-bg:#D9D9D9 \
+    --color=prompt:#616161 \
+    --color=hl+:#b9ca4a \
+    "
+
+local preview="\
+    --ansi \
+    --preview-window 'up:40%:hidden:border-bottom' \
+    --preview 'bat --style=numbers --color=always --line-range :500 {}' \
+    --bind='F4:toggle-preview' \
+    "
+
+export FZF_DEFAULT_COMMAND="\
+    fd --type f \
+    --strip-cwd-prefix \
+    --hidden \
+    --follow \
+    --exclude .git \
+    "
+
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+export FZF_ALT_C_OPTS="--exact"
+
+export FZF_DEFAULT_OPTS="$preview $tap_theme"
+
+export FZF_COMPLETION_TRIGGER="~~"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
